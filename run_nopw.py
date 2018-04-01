@@ -1,5 +1,5 @@
 #Python 2.7 Twitch/IRC Chat Bot
-#This bot can read chat and print it to the console, send messages, and send random messages periodically
+#This bot can read chat and print it to the console, send messages
 
 import random
 import sys
