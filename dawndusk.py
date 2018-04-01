@@ -1,27 +1,32 @@
 #Prints the time for the next dawn & dusk
 
 import datetime
+import pytz
 from astral import Astral
 
 a = Astral()
 location = a.geocoder
 loc = location["Dallas"]
-
-now = datetime.datetime.today()
+now = pytz.timezone("US/Central").localize(datetime.datetime.now())
 
 #Sun's location for current date
 sun = loc.sun(date=datetime.date(now.year, now.month, now.day), local=True)
 #Sun's location for tomorrow
 suntomorrow =  loc.sun(date=now + datetime.timedelta(days=1),local=True) 
 
-print "time is: ", now.strftime("%H:%M")
+print "Current Time: ", now.strftime("%H:%M")
 
-if now.hour < sun["dawn"].hour:
-	print "Dawn is at ", sun["dawn"].strftime("%H:%MPM %m/%d/%y")
-	print "Dusk is at: ", sun["dusk"].strftime("%H:%MAM %m/%d/%y")
-if now.hour > sun["dawn"].hour and now.hour < sun["dusk"].hour:
-	print "Tomorrow's dawn is at:", suntomorrow["dawn"].strftime("%H:%MAM %m/%d/%y") 
-	print "Dusk is at: ", sun["dusk"].strftime("%H:%MPM %m/%d/%y")
-else:
-	print "Tomorrow's dawn is at: ", suntomorrow["dawn"].strftime("%H:%MAM %m/%d/%y")
-	print "Tomorrow's dusk is at: ", suntomorrow["dusk"].strftime("%H:%MPM %m/%d/%y")
+while True:
+	if now < sun["dusk"]:
+		dawnt = sun["dawn"].strftime("%H:%MAM %m/%d/%y")
+		duskt = sun["dusk"].strftime("%H:%MPM %m/%d/%y")		
+		if now > sun["dawn"]:
+			dawnt = suntomorrow["dawn"].strftime("%H:%MAM %m/%d/%y")
+		print "Next dawn: ", dawnt 
+		print "Next dusk: ", duskt
+		break
+	else:
+		dawnt = suntomorrow["dawn"].strftime("%H:%MAM %m/%d/%y")
+		duskt = suntomorrow["dusk"].strftime("%H:%MAM %m/%d/%y")
+		break
+
