@@ -22,11 +22,11 @@ while True:
 		duskt = sun["dusk"].strftime("%H:%MPM %m/%d/%y")		
 		if now > sun["dawn"]:
 			dawnt = suntomorrow["dawn"].strftime("%H:%MAM %m/%d/%y")
-		print "Next dawn: ", dawnt 
-		print "Next dusk: ", duskt
-		break
 	else:
 		dawnt = suntomorrow["dawn"].strftime("%H:%MAM %m/%d/%y")
 		duskt = suntomorrow["dusk"].strftime("%H:%MAM %m/%d/%y")
-		break
+	print "Next dawn: ", dawnt 
+	print "Next dusk: ", duskt
+	break
+
 
